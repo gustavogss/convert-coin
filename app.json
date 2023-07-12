@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "convert-coin",
+    "slug": "convert-coin",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
