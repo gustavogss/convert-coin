@@ -2,10 +2,10 @@
 - Aplicativo conversor de moedas
 
 ## Ferramentas e tecnologias utilizadas :robot:
-- React Native Bare Workflow 
-- Expo 
-- StyleSheet
-- Axios
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/) 
+- [StyleSheet](https://reactnative.dev/docs/stylesheet)
+- [Axios](https://www.npmjs.com/package/axios)
 - [API Awesome](https://docs.awesomeapi.com.br/)
 
 ## Aplicativo :iphone:
