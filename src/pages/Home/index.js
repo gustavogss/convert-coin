@@ -4,6 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Keyboard,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "./styles";
@@ -15,6 +16,8 @@ export function Home() {
   const [loading, setLoading] = useState(true);
   const [moedaselecionada, setMoedaSelecionada] = useState(null);
   const [moedaValor, setMoedaValor] = useState(0);
+  const [valorMoeda, setValorMoeda] = useState(null);
+  const [valorConvertido, setValorConvertido] = useState(0);
 
   useEffect(() => {
     async function loadMoedas() {
@@ -35,6 +38,18 @@ export function Home() {
     loadMoedas();
   }, []);
 
+  async function handleConverter() {
+    if (moedaselecionada === null || moedaValor === 0){
+        alert('Por favor selecione uma moeda')
+        return;
+    }  
+    const response = await api.get(`all/${moedaselecionada}-BRL`)
+    let resultado = (response.data[moedaselecionada].ask * parseFloat(moedaValor))
+    setValorConvertido(`R$ ${resultado.toFixed(2)}`)    
+    setValorMoeda(moedaValor)  
+    Keyboard.dismiss()  
+  }
+
   if (loading) {
     return (
       <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
@@ -47,7 +62,7 @@ export function Home() {
         <Text style={styles.title}>Conversor de moedas</Text>
         <View style={styles.areaMoeda}>
           <Text style={styles.text}>Selecione uma moeda</Text>
-          <Picker moedas={moeda} />
+          <Picker moedas={moeda} onChange={setMoedaSelecionada} />
         </View>
         <View style={styles.areaValor}>
           <Text style={styles.text}>
@@ -60,16 +75,22 @@ export function Home() {
             onChangeText={setMoedaValor}
           />
         </View>
-        <TouchableOpacity style={styles.btnConverter}>
+        <TouchableOpacity style={styles.btnConverter} onPress={handleConverter}>
           <Text style={styles.textConverter}>Converter</Text>
         </TouchableOpacity>
-        <View style={styles.areaResultado}>
-          <Text style={styles.valorConvertido}>1 USD</Text>
-          <Text style={[styles.valorConvertido, { fontSize: 18, margin: 10 }]}>
-            Corresponde a:
-          </Text>
-          <Text style={styles.valorConvertido}>4,819</Text>
-        </View>
+        {valorConvertido !== 0 && (
+          <View style={styles.areaResultado}>
+            <Text style={styles.valorConvertido}>
+                {valorMoeda} {moedaselecionada}
+            </Text>
+            <Text
+              style={[styles.valorConvertido, { fontSize: 18, margin: 10 }]}
+            >
+              Corresponde a:
+            </Text>
+            <Text style={styles.valorConvertido}>{valorConvertido}</Text>
+          </View>
+        )}
       </View>
     );
   }

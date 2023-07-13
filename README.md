@@ -6,6 +6,6 @@
 - Expo 
 - StyleSheet
 - Axios
-- API [Awesome](https://docs.awesomeapi.com.br/)
+- [API Awesome](https://docs.awesomeapi.com.br/)
 
 ## Aplicativo :iphone:
